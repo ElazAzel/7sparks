@@ -354,9 +354,9 @@ function FilmDialog({
           <h2 id="film-dialog-title">{film.title}</h2>
           <p className="film-dialog__studio">{film.studio}</p>
           <p className="film-dialog__description">
-            {film.isSecret
+            {film.shortDescription ?? (film.isSecret
               ? "Седьмая премьера остаётся закрытой до объявления команды."
-              : "Название и материалы фильма появятся после официального объявления."}
+              : "Материалы фильма появятся после официального объявления." )}
           </p>
           {!film.isSecret && (
             <>
@@ -368,10 +368,20 @@ function FilmDialog({
               </ul>
             </>
           )}
-          <button className="ticket-button" type="button" onClick={() => onPortal(film)}>
-            {film.isSecret ? "Ждать объявления" : "Открыть премьеру"}
-            <ExternalLink aria-hidden="true" />
-          </button>
+          <div className="film-dialog__actions">
+            {film.youtubeUrl && (
+              <a className="text-button text-button--dialog" href={film.youtubeUrl} target="_blank" rel="noreferrer">
+                Смотреть на YouTube <Play fill="currentColor" aria-hidden="true" />
+              </a>
+            )}
+            {film.externalPageUrl ? (
+              <button className="ticket-button" type="button" onClick={() => onPortal(film)}>
+                Открыть страницу команды <ExternalLink aria-hidden="true" />
+              </button>
+            ) : (
+              <span className="film-dialog__soon"><Sparkles aria-hidden="true" /> {film.isSecret ? "Объявление скоро" : "Страница команды скоро"}</span>
+            )}
+          </div>
         </div>
       </motion.div>
     </motion.div>
@@ -455,8 +465,8 @@ export function FestivalPage() {
   }, []);
 
   const openPortal = (film: FestivalFilm) => {
-    if (film.websiteUrl) {
-      window.open(film.websiteUrl, "_blank", "noopener,noreferrer");
+    if (film.externalPageUrl) {
+      window.open(film.externalPageUrl, "_blank", "noopener,noreferrer");
       return;
     }
     setToast(

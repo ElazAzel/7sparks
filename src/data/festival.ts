@@ -10,8 +10,12 @@ export type FestivalFilm = {
   artAlt: string;
   members: string[];
   isSecret: boolean;
-  websiteUrl: string | null;
-  videoUrl: string | null;
+  externalPageUrl: string | null;
+  youtubeUrl: string | null;
+  shortDescription: string | null;
+  poster: string | null;
+  gallery: string[];
+  status: "soon" | "published";
 };
 
 export const films: FestivalFilm[] = [
@@ -27,8 +31,12 @@ export const films: FestivalFilm[] = [
     artAlt: "Абстрактный сине-зелёный фестивальный кадр первой команды",
     members: ["Карим", "Ансар"],
     isSecret: false,
-    websiteUrl: null,
-    videoUrl: null,
+    externalPageUrl: null,
+    youtubeUrl: null,
+    shortDescription: null,
+    poster: null,
+    gallery: [],
+    status: "soon",
   },
   {
     id: "premiere-02",
@@ -42,8 +50,12 @@ export const films: FestivalFilm[] = [
     artAlt: "Абстрактный кораллово-жёлтый фестивальный кадр второй команды",
     members: ["Аиша", "Малика", "Улан", "Рауан", "Абай", "Дамели"],
     isSecret: false,
-    websiteUrl: null,
-    videoUrl: null,
+    externalPageUrl: null,
+    youtubeUrl: null,
+    shortDescription: null,
+    poster: null,
+    gallery: [],
+    status: "soon",
   },
   {
     id: "premiere-03",
@@ -57,8 +69,12 @@ export const films: FestivalFilm[] = [
     artAlt: "Абстрактный лаймово-синий фестивальный кадр Folk Valley",
     members: ["Айсултан", "Ильяс", "Арлан", "Мансура", "Нармина", "Адиля"],
     isSecret: false,
-    websiteUrl: null,
-    videoUrl: null,
+    externalPageUrl: null,
+    youtubeUrl: null,
+    shortDescription: null,
+    poster: null,
+    gallery: [],
+    status: "soon",
   },
   {
     id: "premiere-04",
@@ -72,8 +88,12 @@ export const films: FestivalFilm[] = [
     artAlt: "Абстрактный жёлто-коралловый фестивальный кадр четвёртой команды",
     members: ["Абай", "Эсма", "Алишер", "Самир"],
     isSecret: false,
-    websiteUrl: null,
-    videoUrl: null,
+    externalPageUrl: null,
+    youtubeUrl: null,
+    shortDescription: null,
+    poster: null,
+    gallery: [],
+    status: "soon",
   },
   {
     id: "premiere-05",
@@ -87,8 +107,12 @@ export const films: FestivalFilm[] = [
     artAlt: "Абстрактный красно-синий фестивальный кадр пятой команды",
     members: ["Сатти Кумарбекова", "Иман", "Еркежан", "Сатти Нурумбек", "Лале"],
     isSecret: false,
-    websiteUrl: null,
-    videoUrl: null,
+    externalPageUrl: null,
+    youtubeUrl: null,
+    shortDescription: null,
+    poster: null,
+    gallery: [],
+    status: "soon",
   },
   {
     id: "premiere-06",
@@ -102,8 +126,12 @@ export const films: FestivalFilm[] = [
     artAlt: "Абстрактный контрастный фестивальный кадр шестой команды",
     members: ["Султан", "Арлан", "Альмухаммед", "Латифа", "Амаль", "Амира"],
     isSecret: false,
-    websiteUrl: null,
-    videoUrl: null,
+    externalPageUrl: null,
+    youtubeUrl: null,
+    shortDescription: null,
+    poster: null,
+    gallery: [],
+    status: "soon",
   },
   {
     id: "premiere-07",
@@ -117,8 +145,12 @@ export const films: FestivalFilm[] = [
     artAlt: "Закрытый седьмой премьерный слот фестиваля",
     members: [],
     isSecret: true,
-    websiteUrl: null,
-    videoUrl: null,
+    externalPageUrl: null,
+    youtubeUrl: null,
+    shortDescription: null,
+    poster: null,
+    gallery: [],
+    status: "soon",
   },
 ];
 

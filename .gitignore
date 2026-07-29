@@ -5,3 +5,6 @@ out/
 .superdesign/draft.html
 *.log
 .DS_Store
+
+.vercel
+.env*

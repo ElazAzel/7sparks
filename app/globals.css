@@ -600,10 +600,21 @@ a:focus-visible {
 }
 
 .hero__lead {
-  margin: 18px 0 26px;
-  font-size: clamp(16px, 1.35vw, 20px);
+  margin: 12px 0 20px;
+  font-size: clamp(15px, 1.35vw, 20px);
   font-weight: 600;
-  line-height: 1.55;
+  line-height: 1.5;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.hero__summer-camp {
+  margin: 8px 0 0;
+  font-size: clamp(12px, 1.1vw, 16px);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: var(--cobalt);
 }
 
 .hero__actions {
@@ -1901,6 +1912,236 @@ footer p {
   font-weight: 750;
 }
 
+.dialog-team-photos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 0 0 24px;
+}
+
+.dialog-team-photo {
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: 2px solid var(--ink);
+  background: var(--paper-light);
+}
+
+.dialog-team-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dialog-team-photos:has(:only-child) {
+  grid-template-columns: 1fr;
+}
+
+.dialog-team-photos:has(:nth-child(2):last-child) {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.film-dialog__certificates {
+  margin-top: 18px;
+}
+
+.film-dialog__certificates .ticket-button {
+  width: 100%;
+}
+
+.video-days {
+  background: var(--paper-light);
+  padding-bottom: 130px;
+}
+
+.video-days__heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(260px, 0.5fr);
+  gap: clamp(36px, 8vw, 120px);
+  align-items: end;
+  margin: 70px 0 60px;
+}
+
+.video-days__heading h2 {
+  margin: 0;
+  font: 800 clamp(3.4rem, 8vw, 8.5rem)/0.86 var(--font-unbounded), sans-serif;
+  letter-spacing: -0.075em;
+}
+
+.video-days__heading h2 em {
+  display: block;
+  color: var(--cobalt);
+  font-style: normal;
+}
+
+.video-days__heading p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+}
+
+.video-card {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid var(--ink);
+  background: white;
+  box-shadow: 8px 8px 0 rgba(20,20,20,.12);
+}
+
+.video-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid var(--line);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.video-card__day {
+  color: var(--cobalt);
+}
+
+.video-card__date {
+  color: var(--muted);
+}
+
+.video-card h3 {
+  margin: 12px 16px;
+  font: 750 clamp(1rem, 1.2vw, 1.3rem)/1.1 var(--font-unbounded), sans-serif;
+}
+
+.video-card__embed {
+  position: relative;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  margin: auto 16px 16px;
+  width: calc(100% - 32px);
+  border: 1px solid var(--line);
+  background: var(--ink);
+}
+
+.video-card__embed iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.video-card__placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  height: 100%;
+  padding: 20px;
+  color: rgba(255,255,255,.6);
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.video-card__placeholder svg {
+  width: 36px;
+  height: 36px;
+  opacity: 0.5;
+}
+
+.film-page__game-link {
+  background: var(--film-secondary) !important;
+  color: var(--ink) !important;
+}
+
+.film-page__game-link:hover {
+  background: var(--film-accent) !important;
+  color: white !important;
+}
+
+.film-page__team-photos {
+  display: grid;
+  grid-template-columns: .75fr 1.25fr;
+  gap: 7vw;
+  padding: 100px 0;
+}
+
+.film-page__photos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.film-page__photo-frame,
+.film-page__photo-placeholder {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: 3px solid var(--ink);
+  background: white;
+  box-shadow: 6px 6px 0 var(--film-secondary);
+}
+
+.film-page__photo-frame:nth-child(2) {
+  transform: translateY(18px) rotate(1.5deg);
+  box-shadow: 6px 6px 0 var(--film-accent);
+}
+
+.film-page__photo-frame:nth-child(3) {
+  transform: translateY(8px) rotate(-1deg);
+}
+
+.film-page__photo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.film-page__photo-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-style: dashed;
+  background: repeating-linear-gradient(45deg, rgba(36,87,255,.06) 0 13px, transparent 13px 27px), white;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.film-page__photo-placeholder svg {
+  width: 32px;
+  height: 32px;
+  color: var(--film-accent);
+}
+
+.film-page__certificates-btn {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 9px;
+  padding: 16px 20px !important;
+  border: 2px solid var(--film-secondary) !important;
+  color: var(--film-secondary) !important;
+}
+
+.film-page__certificates-btn svg {
+  width: 18px;
+}
+
+.program__certificates {
+  display: flex;
+  justify-content: center;
+  margin-top: 60px;
+}
+
 .toast {
   position: fixed;
   z-index: 150;
@@ -1936,6 +2177,12 @@ footer p {
   display: none;
 }
 
+@media (max-width: 1200px) {
+  .video-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 @media (max-width: 1100px) {
   .hero__title > span {
     font-size: clamp(8rem, 24vw, 16rem);
@@ -1967,6 +2214,24 @@ footer p {
   .crew-sheet:nth-child(2),
   .crew-sheet:nth-child(5) {
     transform: translateY(30px) rotate(1deg);
+  }
+
+  .video-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .video-days__heading {
+    grid-template-columns: 1fr;
+    margin: 55px 0 50px;
+  }
+
+  .film-page__team-photos {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .film-page__photos-grid {
+    max-width: 500px;
   }
 }
 
@@ -2061,6 +2326,21 @@ footer p {
     bottom: 5%;
     left: 5vw;
     width: 52vw;
+    max-width: 100%;
+  }
+
+  .hero__lead {
+    font-size: clamp(14px, 2.5vw, 17px);
+    max-width: 100%;
+    overflow-wrap: break-word;
+  }
+
+  .hero__summer-camp {
+    font-size: clamp(10px, 2vw, 14px);
+  }
+
+  .hero__collage {
+    top: 30%;
   }
 
   .journey__heading,
@@ -2247,10 +2527,20 @@ footer p {
   }
 
   .hero__lead {
-    max-width: 330px;
-    margin: 12px 0 20px;
-    font-size: 15px;
-    line-height: 1.48;
+    max-width: 100%;
+    margin: 10px 0 16px;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .hero__summer-camp {
+    margin: 6px 0 0;
+    font-size: 9px;
+  }
+
+  .hero__copy {
+    top: auto;
+    bottom: 3%;
   }
 
   .hero__actions {
@@ -2608,6 +2898,41 @@ footer p {
     width: 100%;
   }
 
+  .video-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .video-card {
+    max-width: 380px;
+    margin-inline: auto;
+  }
+
+  .video-days__heading h2 {
+    font-size: clamp(2.7rem, 13vw, 4.4rem);
+  }
+
+  .video-days__heading p {
+    font-size: 16px;
+  }
+
+  .film-page__team-photos {
+    padding: 68px 0;
+  }
+
+  .film-page__photos-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .film-page__photo-frame:nth-child(3) {
+    grid-column: span 2;
+  }
+
+  .dialog-team-photos {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .toast {
     bottom: 82px;
     font-size: 13px;
@@ -2663,6 +2988,14 @@ footer p {
 
   .film-card {
     flex-basis: 84vw;
+  }
+
+  .film-page__photos-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .film-page__photo-frame:nth-child(3) {
+    grid-column: auto;
   }
 
   .results__numbers {

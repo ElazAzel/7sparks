@@ -1,13 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <rect width="64" height="64" rx="16" fill="#070816"/>
-  <g transform="translate(32 32)" fill="none" stroke-linecap="round" stroke-width="5">
+  <g transform="translate(32 32)" fill="none" stroke-linecap="round" stroke-width="4.5">
     <path d="M0-7 0-25" stroke="#35D7FF"/>
-    <path d="m5-4 14-17" stroke="#2464EC"/>
-    <path d="m7 2 22-5" stroke="#6C3BFF"/>
-    <path d="m4 6 10 19" stroke="#FF5C7A"/>
-    <path d="m-3 7-7 19" stroke="#FFCA3A"/>
-    <path d="m-7 2-22-4" stroke="#35D7FF"/>
-    <path d="m-5-4-15-16" stroke="#6C3BFF"/>
+    <path d="m3.5-6 11-18" stroke="#2464EC"/>
+    <path d="m6.5-1 22-6" stroke="#6C3BFF"/>
+    <path d="m6 4 18 14" stroke="#FF5C7A"/>
+    <path d="m3 7 8 19" stroke="#FFCA3A"/>
+    <path d="m-3 7-8 19" stroke="#FF654A"/>
+    <path d="m-6 4-18 14" stroke="#D8FF3E"/>
+    <path d="m-6.5-1-22-6" stroke="#35D7FF"/>
+    <path d="m-3.5-6-11-18" stroke="#6C3BFF"/>
   </g>
-  <circle cx="32" cy="32" r="6" fill="#fff"/>
+  <circle cx="32" cy="32" r="5" fill="#fff"/>
 </svg>

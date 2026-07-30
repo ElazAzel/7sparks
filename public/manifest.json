@@ -1,0 +1,19 @@
+{
+  "name": "9 ИСКР — Documentolog AI summer camp",
+  "short_name": "9 ИСКР",
+  "description": "Documentolog AI summer camp × Jedai Academy. AI Film Festival 2026. 27-31 июля.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F4F0E7",
+  "theme_color": "#F4F0E7",
+  "orientation": "portrait-primary",
+  "lang": "ru",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

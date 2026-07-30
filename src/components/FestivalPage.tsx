@@ -19,6 +19,8 @@ import {
   Volume2,
   WandSparkles,
   X,
+  Download,
+  Gamepad2,
 } from "lucide-react";
 import {
   AnimatePresence,
@@ -52,11 +54,19 @@ const days = [
   ["05", "Премьера", "Финальный монтаж и встреча со зрителем"],
 ];
 
+const videoDays = [
+  ["01", "27 июля", "День первый — Вселенная", "tBD"],
+  ["02", "28 июля", "День второй — История", "tBD"],
+  ["03", "29 июля", "День третий — Звук", "tBD"],
+  ["04", "30 июля", "День четвёртый — Портал", "tBD"],
+  ["05", "31 июля", "День пятый — Премьера", "tBD"],
+];
+
 const results = [
   [29, "юных авторов"],
-  [6, "представленных команд"],
-  [7, "премьерных слотов"],
+  [9, "премьерных слотов"],
   [5, "дней продакшена"],
+  [1, "большой экран"],
 ];
 
 const program = [
@@ -76,6 +86,9 @@ const nominations = [
   ["Искра зрительских симпатий", Heart],
   ["Искра командного творчества", Sparkles],
 ];
+
+const CERTIFICATES_URL =
+  "https://drive.google.com/drive/folders/1F97zz0QJEt0xipr59NorXsSF-mbhD6vQ?usp=sharing";
 
 function scrollToId(id: string, closeMenu?: () => void) {
   closeMenu?.();
@@ -107,7 +120,7 @@ function FestivalMark({
           style={
             {
               "--ray": film.accentColor,
-              "--angle": `${index * (360 / 7)}deg`,
+              "--angle": `${index * (360 / films.length)}deg`,
             } as CSSProperties
           }
         />
@@ -139,7 +152,7 @@ function Intro({ onFinish }: { onFinish: () => void }) {
         transition={{ delay: 1.05, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       >
         <FestivalMark light />
-        <strong>7 ИСКР</strong>
+        <strong>9 ИСКР</strong>
         <small>FIRST CUT · 2026</small>
       </motion.div>
       <button className="intro__skip" type="button" onClick={onFinish}>
@@ -198,7 +211,7 @@ function FilmArtwork({
       <div className="film-art__shape film-art__shape--two" aria-hidden="true" />
       <span className="film-art__number">{film.number}</span>
       <span className="film-art__studio">{film.studio}</span>
-      <span className="film-art__code">FRAME {film.number} · 7S/26</span>
+      <span className="film-art__code">FRAME {film.number} · 9S/26</span>
       {film.isSecret && (
         <div className="film-art__secret">
           <Sparkles aria-hidden="true" />
@@ -315,6 +328,8 @@ function FilmDialog({
     };
   }, [onClose]);
 
+  const totalSlots = films.length;
+
   return (
     <motion.div
       className="dialog-backdrop"
@@ -350,12 +365,12 @@ function FilmDialog({
           <span className="tape tape--dialog" aria-hidden="true" />
         </div>
         <div className="film-dialog__content">
-          <p className="micro-label">Премьерный слот · {film.number}/07</p>
+          <p className="micro-label">Премьерный слот · {film.number}/{String(totalSlots).padStart(2, "0")}</p>
           <h2 id="film-dialog-title">{film.title}</h2>
           <p className="film-dialog__studio">{film.studio}</p>
           <p className="film-dialog__description">
             {film.shortDescription ?? (film.isSecret
-              ? "Седьмая премьера остаётся закрытой до объявления команды."
+              ? "Премьера остаётся закрытой до объявления команды."
               : "Материалы фильма появятся после официального объявления." )}
           </p>
           {!film.isSecret && (
@@ -368,12 +383,29 @@ function FilmDialog({
               </ul>
             </>
           )}
+          {film.teamPhotos.length > 0 && (
+            <>
+              <h3>Фото команды</h3>
+              <div className="dialog-team-photos">
+                {film.teamPhotos.map((photo, index) => (
+                  <div key={`${film.id}-photo-${index}`} className="dialog-team-photo">
+                    <img src={photo} alt={`Фото команды ${film.studio} ${index + 1}`} />
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
           <div className="film-dialog__actions">
             {film.youtubeUrl && (
               <a className="text-button text-button--dialog" href={film.youtubeUrl} target="_blank" rel="noreferrer">
                 Смотреть на YouTube <Play fill="currentColor" aria-hidden="true" />
               </a>
             )}
+            {film.gameUrls.length > 0 && film.gameUrls.map((url, i) => (
+              <a key={`${film.id}-game-${i}`} className="text-button text-button--dialog" href={url} target="_blank" rel="noreferrer">
+                Игра {i + 1} <Gamepad2 aria-hidden="true" />
+              </a>
+            ))}
             {film.externalPageUrl ? (
               <button className="ticket-button" type="button" onClick={() => onPortal(film)}>
                 Открыть страницу команды <ExternalLink aria-hidden="true" />
@@ -381,6 +413,11 @@ function FilmDialog({
             ) : (
               <span className="film-dialog__soon"><Sparkles aria-hidden="true" /> {film.isSecret ? "Объявление скоро" : "Страница команды скоро"}</span>
             )}
+          </div>
+          <div className="film-dialog__certificates">
+            <a className="ticket-button" href={CERTIFICATES_URL} target="_blank" rel="noreferrer">
+              Получить сертификаты <Download aria-hidden="true" />
+            </a>
           </div>
         </div>
       </motion.div>
@@ -405,12 +442,12 @@ export function FestivalPage() {
   const collageY = useTransform(heroProgress, [0, 1], [0, -80]);
 
   const finishIntro = useCallback(() => {
-    sessionStorage.setItem("seven-sparks-intro", "seen");
+    sessionStorage.setItem("nine-sparks-intro", "seen");
     setShowIntro(false);
   }, []);
 
   useEffect(() => {
-    if (reduced || sessionStorage.getItem("seven-sparks-intro") === "seen") return;
+    if (reduced || sessionStorage.getItem("nine-sparks-intro") === "seen") return;
     const startFrame = requestAnimationFrame(() => setShowIntro(true));
     const timer = window.setTimeout(finishIntro, 2600);
     return () => {
@@ -471,7 +508,7 @@ export function FestivalPage() {
     }
     setToast(
       film.isSecret
-        ? "Седьмой премьерный слот пока остаётся секретным"
+        ? "Премьерный слот пока остаётся секретным"
         : "Материалы этой премьеры скоро появятся",
     );
   };
@@ -501,29 +538,28 @@ export function FestivalPage() {
     event.currentTarget.style.setProperty("--tilt-y", "0deg");
   };
 
+  const totalSlots = films.length;
+
   return (
     <>
       <AnimatePresence>{showIntro && <Intro onFinish={finishIntro} />}</AnimatePresence>
 
       <div className="global-grain" aria-hidden="true" />
       <header className="site-header">
-        <a className="brand" href="#top" aria-label="7 ИСКР — на главную">
+        <a className="brand" href="#top" aria-label="9 ИСКР — на главную">
           <FestivalMark compact />
-          <span>7 ИСКР</span>
+          <span>9 ИСКР</span>
         </a>
         <nav className="desktop-nav" aria-label="Основная навигация">
           <a href="#journey">Процесс</a>
+          <a href="#videodays">Видеодневники</a>
           <a href="#films">Премьеры</a>
           <a href="#authors">Авторы</a>
           <a href="#program">Программа</a>
         </nav>
-        <button
-          className="header-ticket desktop-cta"
-          type="button"
-          onClick={() => scrollToId("films")}
-        >
-          Каталог <ArrowRight />
-        </button>
+        <a className="header-ticket desktop-cta" href={CERTIFICATES_URL} target="_blank" rel="noreferrer">
+          Сертификаты <Download />
+        </a>
         <button
           className="round-button menu-button"
           type="button"
@@ -546,6 +582,7 @@ export function FestivalPage() {
               <span className="mobile-menu__note">festival map ↓</span>
               {[
                 ["journey", "Процесс"],
+                ["videodays", "Видеодневники"],
                 ["films", "Премьеры"],
                 ["authors", "Авторы"],
                 ["program", "Программа"],
@@ -571,15 +608,15 @@ export function FestivalPage() {
         >
           <div className="hero__ticker" aria-hidden="true">
             <div>
-              STREET CINEMA · YOUNG DIRECTORS · FIRST CUT · 29 AUTHORS · 7 PREMIERES ·{" "}
-              STREET CINEMA · YOUNG DIRECTORS · FIRST CUT · 29 AUTHORS · 7 PREMIERES ·
+              DOCUMENTOLOG AI SUMMER CAMP · 27-31 ИЮЛЯ · YOUNG DIRECTORS · FIRST CUT · 9 PREMIERES ·{" "}
+              DOCUMENTOLOG AI SUMMER CAMP · 27-31 ИЮЛЯ · YOUNG DIRECTORS · FIRST CUT · 9 PREMIERES ·
             </div>
           </div>
           <div className="hero__confetti" aria-hidden="true">
             {Array.from({ length: 12 }, (_, index) => <i key={index} />)}
           </div>
           <motion.div className="hero__title" style={{ y: titleY }}>
-            <span>7</span>
+            <span>9</span>
             <h1>ИСКР</h1>
             <strong>AI FILM FESTIVAL · 2026</strong>
           </motion.div>
@@ -592,13 +629,14 @@ export function FestivalPage() {
               <FilmArtwork film={films[0]} compact />
             </div>
             <div className="hero__sticker">
-              29
-              <small>юных авторов</small>
+              9
+              <small>премьерных слотов</small>
             </div>
             <span className="hero__scribble">снято нами →</span>
           </motion.div>
           <div className="hero__copy">
             <p className="micro-label">Documentolog × Jedai Academy · Алматы</p>
+            <p className="hero__summer-camp">Documentolog AI summer camp · 27-31 июля 2026</p>
             <p className="hero__lead">
               Пять дней, шесть команд и семь премьерных слотов. Здесь идеи
               становятся кадрами, музыкой и собственными цифровыми мирами.
@@ -617,7 +655,7 @@ export function FestivalPage() {
             </div>
           </div>
           <div className="hero__frame-code" aria-hidden="true">
-            FRAME 0001 / FIRST CUT / 43.2389° N
+            FRAME 0009 / FIRST CUT / 43.2389° N
           </div>
         </section>
 
@@ -644,7 +682,7 @@ export function FestivalPage() {
           </div>
           <div className="storyboard">
             <div className="storyboard__rail" aria-hidden="true">
-              <span>7S</span><span>7S</span><span>7S</span><span>7S</span>
+              <span>9S</span><span>9S</span><span>9S</span><span>9S</span>
             </div>
             {days.map(([number, title, description], index) => (
               <motion.article
@@ -658,7 +696,7 @@ export function FestivalPage() {
                 <span className="storyboard__number">{number}</span>
                 <div className="storyboard__still">
                   <span className={`still-shape still-shape--${index + 1}`} />
-                  <small>SCENE {number} · TAKE 07</small>
+                  <small>SCENE {number} · TAKE 09</small>
                 </div>
                 <div className="storyboard__copy">
                   <span>День {number}</span>
@@ -670,21 +708,69 @@ export function FestivalPage() {
           </div>
         </SectionReveal>
 
+        <SectionReveal id="videodays" className="video-days section-shell">
+          <div className="section-kicker">
+            <span>02 / ВИДЕОДНЕВНИКИ</span>
+            <span>5 дней в кадрах</span>
+          </div>
+          <div className="video-days__heading">
+            <h2>
+              КАЖДЫЙ ДЕНЬ
+              <em>В КАДРЕ</em>
+            </h2>
+            <p>
+              Короткие видео из Instagram Reels и YouTube Shorts — как это было день за днём.
+            </p>
+          </div>
+          <div className="video-grid">
+            {videoDays.map(([number, date, title, url], index) => (
+              <motion.article
+                className="video-card"
+                key={number}
+                initial={reduced ? false : { opacity: 0, y: 40 }}
+                whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.25 }}
+                transition={{ duration: 0.5, delay: index * 0.07 }}
+              >
+                <div className="video-card__header">
+                  <span className="video-card__day">День {number}</span>
+                  <span className="video-card__date">{date}</span>
+                </div>
+                <h3>{title}</h3>
+                <div className="video-card__embed">
+                  {url && url !== "tBD" ? (
+                    <iframe
+                      src={url}
+                      title={title}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  ) : (
+                    <div className="video-card__placeholder">
+                      <Play aria-hidden="true" />
+                      <span>Видео дня появится после съёмок</span>
+                    </div>
+                  )}
+                </div>
+              </motion.article>
+            ))}
+          </div>
+        </SectionReveal>
+
         <SectionReveal id="films" className="premieres">
           <div className="section-shell premieres__heading">
             <div className="section-kicker">
-              <span>02 / ПРЕМЬЕРЫ</span>
+              <span>03 / ПРЕМЬЕРЫ</span>
               <span>Листайте киноленту →</span>
             </div>
-            <h2>СЕМЬ ПЕРВЫХ КАДРОВ</h2>
+            <h2>ДЕВЯТЬ ПЕРВЫХ КАДРОВ</h2>
             <p>
-              Названия фильмов пока не объявлены. Но каждая команда уже заняла
-              своё место в фестивальной программе.
+              Девять премьерных слотов — от первой до последней истории.
             </p>
           </div>
           <div className="reel-shell">
-            <div className="premiere-counter" aria-label="Семь премьерных слотов">
-              <span>7 ПРЕМЬЕР</span>
+            <div className="premiere-counter" aria-label="Девять премьерных слотов">
+              <span>{totalSlots} ПРЕМЬЕР</span>
               <div>
                 {films.map((film) => (
                   <button
@@ -697,9 +783,9 @@ export function FestivalPage() {
                   </button>
                 ))}
               </div>
-              <span>6 КОМАНД + 1 СЕКРЕТ</span>
+              <span>{totalSlots} ПРЕМЬЕРНЫХ СЛОТОВ</span>
             </div>
-            <div className="premiere-grid" aria-label="Каталог семи премьер">
+            <div className="premiere-grid" aria-label={`Каталог ${totalSlots} премьер`}>
               {films.map((film, index) => (
                 <article
                   className={`film-card film-card--${index + 1}`}
@@ -720,7 +806,7 @@ export function FestivalPage() {
                   </button>
                   <div className="film-card__caption">
                     <div>
-                      <span>{film.number}/07</span>
+                      <span>{film.number}/{String(totalSlots).padStart(2, "0")}</span>
                       <h3>{film.title}</h3>
                       <p>{film.studio}</p>
                     </div>
@@ -729,19 +815,19 @@ export function FestivalPage() {
                 </article>
               ))}
             </div>
-            <p className="swipe-cue">Все семь карточек уже здесь — нажмите на любую, чтобы увидеть команду</p>
+            <p className="swipe-cue">Все {totalSlots} карточек уже здесь — нажмите на любую, чтобы увидеть команду</p>
           </div>
         </SectionReveal>
 
         <SectionReveal id="authors" className="authors">
           <div className="authors__marquee" aria-hidden="true">
             <div>
-              29 АВТОРОВ · 6 КОМАНД · ОДИН БОЛЬШОЙ ЭКРАН · 29 АВТОРОВ · 6 КОМАНД ·
+              {authors.length} АВТОРОВ · {totalSlots} ПРЕМЬЕР · ОДИН БОЛЬШОЙ ЭКРАН · {authors.length} АВТОРОВ · {totalSlots} ПРЕМЬЕР ·
             </div>
           </div>
           <div className="section-shell">
             <div className="section-kicker section-kicker--light">
-              <span>03 / В ТИТРАХ</span>
+              <span>04 / В ТИТРАХ</span>
               <span>Все имена на экране</span>
             </div>
             <div className="authors__heading">
@@ -754,8 +840,8 @@ export function FestivalPage() {
                 общей премьеры.
               </p>
             </div>
-            <div className="credits-cloud" aria-label="Все 29 участников фестиваля">
-              <span className="credits-cloud__label">ВСЕ 29 ИМЁН</span>
+            <div className="credits-cloud" aria-label={`Все ${authors.length} участников фестиваля`}>
+              <span className="credits-cloud__label">ВСЕ {authors.length} ИМЁН</span>
               <div>
                 {authors.map((author, index) => (
                   <span key={`${author}-${index}`}>{author}</span>
@@ -780,7 +866,7 @@ export function FestivalPage() {
                     ))}
                   </ol>
                   <span className="crew-sheet__stamp">
-                    {teamIndex === 2 ? "FOLK / VALLEY" : "7 ИСКР / 2026"}
+                    9 ИСКР / 2026
                   </span>
                 </article>
               ))}
@@ -791,7 +877,7 @@ export function FestivalPage() {
 
         <SectionReveal className="results section-shell">
           <div className="section-kicker">
-            <span>04 / ФИНАЛЬНЫЙ МОНТАЖ</span>
+            <span>05 / ФИНАЛЬНЫЙ МОНТАЖ</span>
             <span>Только факты</span>
           </div>
           <div className="results__board">
@@ -802,10 +888,10 @@ export function FestivalPage() {
             </div>
             <div className="results__numbers">
               {results.map(([value, label], index) => (
-                <article key={label}>
+                <article key={label as string}>
                   <span>0{index + 1}</span>
                   <strong><Counter value={Number(value)} /></strong>
-                  <p>{label}</p>
+                  <p>{label as string}</p>
                 </article>
               ))}
             </div>
@@ -814,7 +900,7 @@ export function FestivalPage() {
 
         <SectionReveal id="program" className="program section-shell">
           <div className="section-kicker">
-            <span>05 / ПРОГРАММА</span>
+            <span>06 / ПРОГРАММА</span>
             <span>Call time · Алматы</span>
           </div>
           <div className="program__heading">
@@ -834,6 +920,11 @@ export function FestivalPage() {
               </article>
             ))}
           </div>
+          <div className="program__certificates">
+            <a className="ticket-button" href={CERTIFICATES_URL} target="_blank" rel="noreferrer">
+              Получить сертификаты <Download aria-hidden="true" />
+            </a>
+          </div>
           <blockquote>
             «Добро пожаловать
             <em>в нашу вселенную»</em>
@@ -842,7 +933,7 @@ export function FestivalPage() {
 
         <SectionReveal className="nominations section-shell">
           <div className="section-kicker">
-            <span>06 / ИСКРЫ ФЕСТИВАЛЯ</span>
+            <span>07 / ИСКРЫ ФЕСТИВАЛЯ</span>
             <span>Не рейтинг, а сильные стороны</span>
           </div>
           <div className="nominations__heading">
@@ -893,7 +984,7 @@ export function FestivalPage() {
           >
             <FestivalMark light />
           </motion.div>
-          <p className="micro-label">FINAL FRAME / 07</p>
+          <p className="micro-label">FINAL FRAME / 09</p>
           <h2>
             ЭТО ТОЛЬКО
             <em>ПЕРВЫЙ КАДР</em>
@@ -915,9 +1006,9 @@ export function FestivalPage() {
       <footer>
         <a className="brand" href="#top">
           <FestivalMark compact />
-          <span>7 ИСКР</span>
+          <span>9 ИСКР</span>
         </a>
-        <p>Documentolog × Jedai Academy<br />AI Film Festival · 2026</p>
+        <p>Documentolog × Jedai Academy<br />Documentolog AI summer camp · 27-31 июля 2026</p>
         <span>VOL. 01 / FIRST CUT</span>
       </footer>
 

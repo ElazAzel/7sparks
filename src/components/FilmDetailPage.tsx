@@ -2,12 +2,14 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight, Clapperboard, Play, Sparkles } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Camera, Clapperboard, Download, Gamepad2, Play, Sparkles } from "lucide-react";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { type CSSProperties, useRef } from "react";
 import type { FestivalFilm } from "@/src/data/festival";
 
-const FESTIVAL_URL = "https://7-sparks-festival.vercel.app/";
+const FESTIVAL_URL = "https://9-sparks-festival.vercel.app/";
+const CERTIFICATES_URL =
+  "https://drive.google.com/drive/folders/1F97zz0QJEt0xipr59NorXsSF-mbhD6vQ?usp=sharing";
 
 function youtubeEmbedUrl(url: string | null) {
   if (!url) return null;
@@ -35,6 +37,7 @@ export function FilmDetailPage({ film }: { film: FestivalFilm }) {
   const decorativeImage = film.number === "02" || film.number === "05"
     ? "/film-decor/street-cinema-coral.png"
     : "/film-decor/street-cinema-blue.png";
+  const totalSlots = 9;
 
   return (
     <main
@@ -48,7 +51,7 @@ export function FilmDetailPage({ film }: { film: FestivalFilm }) {
         <a href={FESTIVAL_URL} className="film-page__back">
           <ArrowLeft aria-hidden="true" /> На главный сайт фестиваля
         </a>
-        <span>7 ИСКР / {film.number}</span>
+        <span>9 ИСКР / {film.number}</span>
       </nav>
 
       <section ref={heroRef} className="film-page__hero">
@@ -68,7 +71,7 @@ export function FilmDetailPage({ film }: { film: FestivalFilm }) {
           <i className="film-page__stamp">TAKE {film.number}</i>
         </motion.div>
         <div className="film-page__hero-copy">
-          <p className="film-page__eyebrow">ПРЕМЬЕРНЫЙ СЛОТ {film.number}/07</p>
+          <p className="film-page__eyebrow">ПРЕМЬЕРНЫЙ СЛОТ {film.number}/{String(totalSlots).padStart(2, "0")}</p>
           <h1>{film.title}</h1>
           <p className="film-page__studio">{film.studio}</p>
           <p className="film-page__lead">
@@ -84,6 +87,11 @@ export function FilmDetailPage({ film }: { film: FestivalFilm }) {
             ) : (
               <span className="film-page__soon"><Sparkles aria-hidden="true" /> Премьера скоро</span>
             )}
+            {film.gameUrls.length > 0 && film.gameUrls.map((url, i) => (
+              <a key={`game-${i}`} className="film-page__primary film-page__game-link" href={url} target="_blank" rel="noreferrer">
+                <Gamepad2 aria-hidden="true" /> Игра {i + 1}
+              </a>
+            ))}
             <a className="film-page__text-link" href={FESTIVAL_URL}>
               Все премьеры <ArrowUpRight aria-hidden="true" />
             </a>
@@ -125,15 +133,42 @@ export function FilmDetailPage({ film }: { film: FestivalFilm }) {
         </section>
       )}
 
+      {!film.isSecret && (
+        <section className="film-page__team-photos film-page__section">
+          <div className="film-page__section-heading">
+            <p className="film-page__eyebrow">03 / ФОТО КОМАНДЫ</p>
+            <h2>КОМАНДА<br /><em>В КАДРЕ</em></h2>
+          </div>
+          <div className="film-page__photos-grid">
+            {film.teamPhotos.length > 0 ? (
+              film.teamPhotos.map((photo, index) => (
+                <figure key={`${film.id}-photo-${index}`} className="film-page__photo-frame">
+                  <Image src={photo} alt={`Фото команды ${film.studio} ${index + 1}`} fill sizes="(max-width: 720px) 92vw, 30vw" />
+                </figure>
+              ))
+            ) : (
+              <>
+                {[0, 1, 2].map((i) => (
+                  <div key={`photo-placeholder-${i}`} className="film-page__photo-placeholder">
+                    <Camera aria-hidden="true" />
+                    <span>Фото {i + 1}</span>
+                  </div>
+                ))}
+              </>
+            )}
+          </div>
+        </section>
+      )}
+
       <section className="film-page__gallery film-page__section">
         <div className="film-page__section-heading">
-          <p className="film-page__eyebrow">03 / КАДРЫ ИЗ МИРА</p>
+          <p className="film-page__eyebrow">04 / КАДРЫ ИЗ МИРА</p>
           <h2>КОНТАКТНЫЙ<br /><em>ЛИСТ</em></h2>
         </div>
         <div className="film-page__gallery-grid">
           <figure className="film-page__gallery-decor">
             <Image src={decorativeImage} alt="Абстрактная коллажная подложка фестиваля" fill sizes="(max-width: 720px) 92vw, 42vw" />
-            <figcaption>визуальный дневник / 7 искр</figcaption>
+            <figcaption>визуальный дневник / 9 искр</figcaption>
           </figure>
           {film.gallery.map((image, index) => (
             <figure key={image} className="film-page__gallery-frame">
@@ -152,7 +187,7 @@ export function FilmDetailPage({ film }: { film: FestivalFilm }) {
 
       <section className="film-page__watch film-page__section">
         <div>
-          <p className="film-page__eyebrow">04 / СМОТРЕТЬ</p>
+          <p className="film-page__eyebrow">05 / СМОТРЕТЬ</p>
           <h2>БОЛЬШОЙ<br /><em>ЭКРАН</em></h2>
         </div>
         {embedUrl ? (
@@ -169,8 +204,11 @@ export function FilmDetailPage({ film }: { film: FestivalFilm }) {
       </section>
 
       <footer className="film-page__footer">
-        <p>Эта история - часть фестиваля «7 ИСКР».</p>
-        <a href={FESTIVAL_URL}>Вернуться на главный сайт фестиваля 7 ИСКР <ArrowUpRight aria-hidden="true" /></a>
+        <p>Эта история - часть фестиваля «9 ИСКР».</p>
+        <a href={CERTIFICATES_URL} target="_blank" rel="noreferrer" className="film-page__certificates-btn">
+          <Download aria-hidden="true" /> Получить сертификаты
+        </a>
+        <a href={FESTIVAL_URL}>Вернуться на главный сайт фестиваля 9 ИСКР <ArrowUpRight aria-hidden="true" /></a>
         <Link href="/" className="film-page__local-link">Открыть каталог на этом сайте</Link>
       </footer>
     </main>

@@ -7,7 +7,7 @@ import { motion, useReducedMotion, useScroll, useTransform } from "motion/react"
 import { type CSSProperties, useRef } from "react";
 import type { FestivalFilm } from "@/src/data/festival";
 
-const FESTIVAL_URL = "https://9-sparks-festival.vercel.app/";
+const FESTIVAL_URL = "https://7-sparks-festival.vercel.app/";
 const CERTIFICATES_URL =
   "https://drive.google.com/drive/folders/1F97zz0QJEt0xipr59NorXsSF-mbhD6vQ?usp=sharing";
 

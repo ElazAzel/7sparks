@@ -471,7 +471,7 @@ a:focus-visible {
 
 .hero__title {
   position: relative;
-  z-index: 2;
+  z-index: 6;
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: end;
@@ -502,9 +502,9 @@ a:focus-visible {
 .hero__collage {
   position: absolute;
   z-index: 4;
-  top: 29%;
+  top: 38%;
   right: clamp(22px, 7vw, 110px);
-  width: clamp(300px, 31vw, 510px);
+  width: clamp(280px, 29vw, 480px);
   transform: translate(var(--pointer-x), var(--pointer-y));
 }
 
@@ -594,10 +594,10 @@ a:focus-visible {
 .hero__copy {
   position: absolute;
   z-index: 5;
-  bottom: 8%;
+  bottom: 5%;
   left: clamp(22px, 7vw, 110px);
-  width: min(36vw, 500px);
-  max-height: 48%;
+  width: min(34vw, 480px);
+  max-height: 42%;
   overflow-y: auto;
 }
 
@@ -2330,27 +2330,27 @@ footer p {
   }
 
   .hero__collage {
-    top: 36%;
+    top: 42%;
     right: 5vw;
-    width: min(58vw, 400px);
+    width: min(52vw, 360px);
   }
 
   .hero__copy {
-    bottom: 4%;
+    bottom: 2%;
     left: 5vw;
     width: 48vw;
-    max-width: 420px;
-    max-height: 40%;
+    max-width: 400px;
+    max-height: 35%;
   }
 
   .hero__lead {
-    font-size: clamp(13px, 2.2vw, 16px);
+    font-size: clamp(12px, 2vw, 15px);
     max-width: 100%;
     overflow-wrap: break-word;
   }
 
   .hero__summer-camp {
-    font-size: clamp(9px, 1.8vw, 13px);
+    font-size: clamp(8px, 1.6vw, 12px);
   }
 
   .journey__heading,
@@ -2495,10 +2495,10 @@ footer p {
   }
 
   .hero__collage {
-    top: 36%;
+    top: 40%;
     right: 16px;
-    width: 52vw;
-    max-width: 280px;
+    width: 50vw;
+    max-width: 240px;
   }
 
   .contact-sheet--main {
@@ -2532,11 +2532,11 @@ footer p {
 
   .hero__copy {
     right: 18px;
-    bottom: 3%;
+    bottom: 2%;
     left: 18px;
     width: auto;
-    max-height: 35%;
-    max-width: 340px;
+    max-height: 30%;
+    max-width: 300px;
   }
 
   .hero__lead {
@@ -2961,15 +2961,16 @@ footer p {
   }
 
   .hero__collage {
-    top: 38%;
-    width: 48vw;
-    max-width: 210px;
+    top: 42%;
+    width: 44vw;
+    max-width: 170px;
   }
 
   .hero__copy {
     bottom: 2%;
     top: auto;
-    max-width: 280px;
+    max-width: 240px;
+    max-height: 28%;
   }
 
   .hero__lead {

@@ -287,6 +287,19 @@ function MagneticButton({
   );
 }
 
+function youtubeEmbedUrl(url: string | null) {
+  if (!url) return null;
+  try {
+    const parsed = new URL(url);
+    const id = parsed.hostname.includes("youtu.be")
+      ? parsed.pathname.slice(1)
+      : parsed.searchParams.get("v");
+    return id ? `https://www.youtube-nocookie.com/embed/${id}` : null;
+  } catch {
+    return null;
+  }
+}
+
 function FilmDialog({
   film,
   onClose,
@@ -297,6 +310,7 @@ function FilmDialog({
   onPortal: (film: FestivalFilm) => void;
 }) {
   const dialogRef = useRef<HTMLDivElement>(null);
+  const embedUrl = youtubeEmbedUrl(film.youtubeUrl);
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -361,8 +375,16 @@ function FilmDialog({
           <X />
         </button>
         <div className="film-dialog__visual">
-          <FilmArtwork film={film} />
-          <span className="tape tape--dialog" aria-hidden="true" />
+          {embedUrl ? (
+            <div className="film-dialog__embed">
+              <iframe src={embedUrl} title={film.title} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
+            </div>
+          ) : (
+            <>
+              <FilmArtwork film={film} />
+              <span className="tape tape--dialog" aria-hidden="true" />
+            </>
+          )}
         </div>
         <div className="film-dialog__content">
           <p className="micro-label">Премьерный слот · {film.number}/{String(totalSlots).padStart(2, "0")}</p>
@@ -396,11 +418,6 @@ function FilmDialog({
             </>
           )}
           <div className="film-dialog__actions">
-            {film.youtubeUrl && (
-              <a className="text-button text-button--dialog" href={film.youtubeUrl} target="_blank" rel="noreferrer">
-                Смотреть на YouTube <Play fill="currentColor" aria-hidden="true" />
-              </a>
-            )}
             {film.gameUrls.length > 0 && film.gameUrls.map((url, i) => (
               <a key={`${film.id}-game-${i}`} className="text-button text-button--dialog" href={url} target="_blank" rel="noreferrer">
                 Игра {i + 1} <Gamepad2 aria-hidden="true" />

@@ -63,8 +63,8 @@ const videoDays = [
 ];
 
 const results = [
-  [29, "юных авторов"],
-  [8, "премьерных слотов"],
+  [30, "юных авторов"],
+  [9, "премьерных слотов"],
   [5, "дней продакшена"],
   [1, "большой экран"],
 ];
@@ -152,7 +152,7 @@ function Intro({ onFinish }: { onFinish: () => void }) {
         transition={{ delay: 1.05, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       >
         <FestivalMark light />
-        <strong>8 ИСКР</strong>
+        <strong>9 ИСКР</strong>
         <small>FIRST CUT · 2026</small>
       </motion.div>
       <button className="intro__skip" type="button" onClick={onFinish}>
@@ -211,7 +211,7 @@ function FilmArtwork({
       <div className="film-art__shape film-art__shape--two" aria-hidden="true" />
       <span className="film-art__number">{film.number}</span>
       <span className="film-art__studio">{film.studio}</span>
-      <span className="film-art__code">FRAME {film.number} · 8S/26</span>
+      <span className="film-art__code">FRAME {film.number} · 9S/26</span>
       {film.isSecret && (
         <div className="film-art__secret">
           <Sparkles aria-hidden="true" />
@@ -459,12 +459,12 @@ export function FestivalPage() {
   const collageY = useTransform(heroProgress, [0, 1], [0, -80]);
 
   const finishIntro = useCallback(() => {
-    sessionStorage.setItem("eight-sparks-intro", "seen");
+    sessionStorage.setItem("nine-sparks-intro", "seen");
     setShowIntro(false);
   }, []);
 
   useEffect(() => {
-    if (reduced || sessionStorage.getItem("eight-sparks-intro") === "seen") return;
+    if (reduced || sessionStorage.getItem("nine-sparks-intro") === "seen") return;
     const startFrame = requestAnimationFrame(() => setShowIntro(true));
     const timer = window.setTimeout(finishIntro, 2600);
     return () => {
@@ -563,9 +563,9 @@ export function FestivalPage() {
 
       <div className="global-grain" aria-hidden="true" />
       <header className="site-header">
-        <a className="brand" href="#top" aria-label="8 ИСКР — на главную">
+        <a className="brand" href="#top" aria-label="9 ИСКР — на главную">
           <FestivalMark compact />
-          <span>8 ИСКР</span>
+          <span>9 ИСКР</span>
         </a>
         <nav className="desktop-nav" aria-label="Основная навигация">
           <a href="#journey">Процесс</a>
@@ -625,15 +625,15 @@ export function FestivalPage() {
         >
           <div className="hero__ticker" aria-hidden="true">
             <div>
-              DOCUMENTOLOG AI SUMMER CAMP · 27-31 ИЮЛЯ · YOUNG DIRECTORS · FIRST CUT · 8 PREMIERES ·{" "}
-              DOCUMENTOLOG AI SUMMER CAMP · 27-31 ИЮЛЯ · YOUNG DIRECTORS · FIRST CUT · 8 PREMIERES ·
+              DOCUMENTOLOG AI SUMMER CAMP · 27-31 ИЮЛЯ · YOUNG DIRECTORS · FIRST CUT · 9 PREMIERES ·{" "}
+              DOCUMENTOLOG AI SUMMER CAMP · 27-31 ИЮЛЯ · YOUNG DIRECTORS · FIRST CUT · 9 PREMIERES ·
             </div>
           </div>
           <div className="hero__confetti" aria-hidden="true">
             {Array.from({ length: 12 }, (_, index) => <i key={index} />)}
           </div>
           <motion.div className="hero__title" style={{ y: titleY }}>
-            <span>8</span>
+            <span>9</span>
             <h1>ИСКР</h1>
             <strong>AI FILM FESTIVAL · 2026</strong>
           </motion.div>
@@ -655,7 +655,7 @@ export function FestivalPage() {
             <p className="micro-label">Documentolog × Jedai Academy · Алматы</p>
             <p className="hero__summer-camp">Documentolog AI summer camp · 27-31 июля 2026</p>
             <p className="hero__lead">
-              Пять дней, шесть команд и семь премьерных слотов. Здесь идеи
+              Пять дней, девять команд и девять премьерных слотов. Здесь идеи
               становятся кадрами, музыкой и собственными цифровыми мирами.
             </p>
             <div className="hero__actions">
@@ -672,7 +672,7 @@ export function FestivalPage() {
             </div>
           </div>
           <div className="hero__frame-code" aria-hidden="true">
-            FRAME 0008 / FIRST CUT / 43.2389° N
+            FRAME 0009 / FIRST CUT / 43.2389° N
           </div>
         </section>
 
@@ -699,7 +699,7 @@ export function FestivalPage() {
           </div>
           <div className="storyboard">
             <div className="storyboard__rail" aria-hidden="true">
-              <span>8S</span><span>8S</span><span>8S</span><span>8S</span>
+              <span>9S</span><span>9S</span><span>9S</span><span>9S</span>
             </div>
             {days.map(([number, title, description], index) => (
               <motion.article
@@ -780,13 +780,13 @@ export function FestivalPage() {
               <span>03 / ПРЕМЬЕРЫ</span>
               <span>Листайте киноленту →</span>
             </div>
-            <h2>ВОСЕМЬ ПЕРВЫХ КАДРОВ</h2>
+            <h2>ДЕВЯТЬ ПЕРВЫХ КАДРОВ</h2>
             <p>
-              Восемь премьерных слотов — от первой до последней истории.
+              Девять премьерных слотов — от первой до последней истории.
             </p>
           </div>
           <div className="reel-shell">
-            <div className="premiere-counter" aria-label="Восемь премьерных слотов">
+            <div className="premiere-counter" aria-label="Девять премьерных слотов">
               <span>{totalSlots} ПРЕМЬЕР</span>
               <div>
                 {films.map((film) => (
@@ -883,7 +883,7 @@ export function FestivalPage() {
                     ))}
                   </ol>
                   <span className="crew-sheet__stamp">
-                    8 ИСКР / 2026
+                    9 ИСКР / 2026
                   </span>
                 </article>
               ))}
@@ -1001,7 +1001,7 @@ export function FestivalPage() {
           >
             <FestivalMark light />
           </motion.div>
-          <p className="micro-label">FINAL FRAME / 08</p>
+          <p className="micro-label">FINAL FRAME / 09</p>
           <h2>
             ЭТО ТОЛЬКО
             <em>ПЕРВЫЙ КАДР</em>
@@ -1023,7 +1023,7 @@ export function FestivalPage() {
       <footer>
         <a className="brand" href="#top">
           <FestivalMark compact />
-          <span>8 ИСКР</span>
+          <span>9 ИСКР</span>
         </a>
         <p>Documentolog × Jedai Academy<br />Documentolog AI summer camp · 27-31 июля 2026</p>
         <span>VOL. 01 / FIRST CUT</span>

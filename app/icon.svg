@@ -2,13 +2,14 @@
   <rect width="64" height="64" rx="16" fill="#070816"/>
   <g transform="translate(32 32)" fill="none" stroke-linecap="round" stroke-width="4.5">
     <path d="M0-7 0-25" stroke="#35D7FF"/>
-    <path d="m5-5 13-13" stroke="#2464EC"/>
-    <path d="m7 0 18 0" stroke="#6C3BFF"/>
-    <path d="m5 5 13 13" stroke="#FF5C7A"/>
-    <path d="M0 7 0 25" stroke="#FFCA3A"/>
-    <path d="m-5 5-13 13" stroke="#FF654A"/>
-    <path d="m-7 0-18 0" stroke="#D8FF3E"/>
-    <path d="m-5-5-13-13" stroke="#35D7FF"/>
+    <path d="m4.5-5.4 10.9-13" stroke="#2464EC"/>
+    <path d="m6.9-1.2 16.7-3" stroke="#6C3BFF"/>
+    <path d="m6.1 3.5 14.7 8.5" stroke="#FF5C7A"/>
+    <path d="m2.4 6.6 5.8 16.4" stroke="#FFCA3A"/>
+    <path d="m-2.4 6.6-5.8 16.4" stroke="#FF654A"/>
+    <path d="m-6.1 3.5-14.7 8.5" stroke="#D8FF3E"/>
+    <path d="m-6.9-1.2-16.7-3" stroke="#35D7FF"/>
+    <path d="m-4.5-5.4-10.9-13" stroke="#F4C84A"/>
   </g>
   <circle cx="32" cy="32" r="5" fill="#fff"/>
 </svg>

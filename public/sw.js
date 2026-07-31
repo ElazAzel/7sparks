@@ -1,4 +1,4 @@
-const CACHE_NAME = "eight-sparks-v1";
+const CACHE_NAME = "nine-sparks-v1";
 
 const PRECACHE_URLS = [
   "/",

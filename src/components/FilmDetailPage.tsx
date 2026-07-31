@@ -37,7 +37,7 @@ export function FilmDetailPage({ film }: { film: FestivalFilm }) {
   const decorativeImage = film.number === "02" || film.number === "05"
     ? "/film-decor/street-cinema-coral.png"
     : "/film-decor/street-cinema-blue.png";
-  const totalSlots = 9;
+  const totalSlots = 8;
 
   return (
     <main
@@ -51,7 +51,7 @@ export function FilmDetailPage({ film }: { film: FestivalFilm }) {
         <a href={FESTIVAL_URL} className="film-page__back">
           <ArrowLeft aria-hidden="true" /> На главный сайт фестиваля
         </a>
-        <span>9 ИСКР / {film.number}</span>
+        <span>8 ИСКР / {film.number}</span>
       </nav>
 
       <section ref={heroRef} className="film-page__hero">
@@ -168,7 +168,7 @@ export function FilmDetailPage({ film }: { film: FestivalFilm }) {
         <div className="film-page__gallery-grid">
           <figure className="film-page__gallery-decor">
             <Image src={decorativeImage} alt="Абстрактная коллажная подложка фестиваля" fill sizes="(max-width: 720px) 92vw, 42vw" />
-            <figcaption>визуальный дневник / 9 искр</figcaption>
+            <figcaption>визуальный дневник / 8 искр</figcaption>
           </figure>
           {film.gallery.map((image, index) => (
             <figure key={image} className="film-page__gallery-frame">
@@ -204,11 +204,11 @@ export function FilmDetailPage({ film }: { film: FestivalFilm }) {
       </section>
 
       <footer className="film-page__footer">
-        <p>Эта история - часть фестиваля «9 ИСКР».</p>
+        <p>Эта история - часть фестиваля «8 ИСКР».</p>
         <a href={CERTIFICATES_URL} target="_blank" rel="noreferrer" className="film-page__certificates-btn">
           <Download aria-hidden="true" /> Получить сертификаты
         </a>
-        <a href={FESTIVAL_URL}>Вернуться на главный сайт фестиваля 9 ИСКР <ArrowUpRight aria-hidden="true" /></a>
+        <a href={FESTIVAL_URL}>Вернуться на главный сайт фестиваля 8 ИСКР <ArrowUpRight aria-hidden="true" /></a>
         <Link href="/" className="film-page__local-link">Открыть каталог на этом сайте</Link>
       </footer>
     </main>

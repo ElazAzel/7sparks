@@ -55,10 +55,10 @@ const days = [
 ];
 
 const videoDays = [
-  ["01", "27 июля", "День первый — Вселенная", "tBD"],
-  ["02", "28 июля", "День второй — История", "tBD"],
-  ["03", "29 июля", "День третий — Звук", "tBD"],
-  ["04", "30 июля", "День четвёртый — Портал", "tBD"],
+  ["01", "27 июля", "День первый — Вселенная", "https://youtube.com/shorts/SG0e8d3a0Ns"],
+  ["02", "28 июля", "День второй — История", "https://youtube.com/shorts/u2-pu68VuYs"],
+  ["03", "29 июля", "День третий — Звук", "https://youtube.com/shorts/pBLFzA-B_dE"],
+  ["04", "30 июля", "День четвёртый — Портал", "https://youtube.com/shorts/luhe3PCCWME"],
   ["05", "31 июля", "День пятый — Премьера", "tBD"],
 ];
 
@@ -291,9 +291,12 @@ function youtubeEmbedUrl(url: string | null) {
   if (!url) return null;
   try {
     const parsed = new URL(url);
-    const id = parsed.hostname.includes("youtu.be")
-      ? parsed.pathname.slice(1)
-      : parsed.searchParams.get("v");
+    const shortsMatch = parsed.pathname.match(/^\/shorts\/([\w-]+)/);
+    const id = shortsMatch
+      ? shortsMatch[1]
+      : parsed.hostname.includes("youtu.be")
+        ? parsed.pathname.slice(1)
+        : parsed.searchParams.get("v");
     return id ? `https://www.youtube-nocookie.com/embed/${id}` : null;
   } catch {
     return null;
@@ -757,7 +760,7 @@ export function FestivalPage() {
                 <div className="video-card__embed">
                   {url && url !== "tBD" ? (
                     <iframe
-                      src={url}
+                      src={youtubeEmbedUrl(url) ?? url}
                       title={title}
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen

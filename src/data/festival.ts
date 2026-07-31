@@ -35,7 +35,7 @@ export const films: FestivalFilm[] = [
     isSecret: false,
     externalPageUrl: null,
     youtubeUrl: "https://youtu.be/l0ljf3LTZI0",
-    gameUrls: [],
+    gameUrls: ["https://magic321.lovable.app/"],
     shortDescription: "«SWIM» — премьера Карима и Ансара. История, которая держит на плаву.",
     poster: null,
     gallery: [],

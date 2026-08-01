@@ -220,4 +220,4 @@ export const films: FestivalFilm[] = [
 ];
 
 export const representedTeams = films.filter((film) => !film.isSecret);
-export const authors = [...new Set(representedTeams.flatMap((film) => film.members))];
+export const authors = representedTeams.flatMap((film) => film.members);

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>РџСЂРёРєР»СЋС‡РµРЅРёРµ Р°Р№С‚РёС€РЅРёРєР°</title>
+<title>Приключение айтишника</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#0a0a1a;display:flex;justify-content:center;align-items:center;height:100vh;font-family:'Courier New',monospace;overflow:hidden}
@@ -18,20 +18,20 @@ ctx.imageSmoothingEnabled=false;
 const W=c.width,H=c.height,G=0.68,GROUND=460,LVL_LEN=5150;
 
 const OUTFITS=[
-  {id:'default',name:'РњР°СЂРёРѕ',price:0,shirt:'#e53935',pants:'#1565c0',shoes:'#5d4037',skin:'#ffccaa',hair:'#4e342e',cap:'#e53935',overalls:true},
-  {id:'redtshirt',name:'РљСЂР°СЃРЅР°СЏ С„СѓС‚Р±РѕР»РєР°',price:3,shirt:'#e53935',pants:'#37474f',shoes:'#5d4037',skin:'#ffccaa',hair:'#4e342e',cap:'#37474f',overalls:false},
-  {id:'luigi',name:'Р›СѓРёРґР¶Рё',price:5,shirt:'#2e7d32',pants:'#1565c0',shoes:'#5d4037',skin:'#ffccaa',hair:'#4e342e',cap:'#2e7d32',overalls:true},
-  {id:'wario',name:'Р’Р°СЂРёРѕ',price:8,shirt:'#fdd835',pants:'#1565c0',shoes:'#5d4037',skin:'#ffccaa',hair:'#4e342e',cap:'#fdd835',overalls:true},
-  {id:'toad',name:'Р–Р°Р±Р°',price:10,shirt:'#e53935',pants:'#fff',shoes:'#5d4037',skin:'#ffccaa',hair:'#4e342e',cap:'#e53935',overalls:false,mushroom:true},
-  {id:'builder',name:'РЎС‚СЂРѕРёС‚РµР»СЊ',price:15,shirt:'#ff8f00',pants:'#37474f',shoes:'#5d4037',skin:'#ffccaa',hair:'#4e342e',cap:'#ff8f00',overalls:false,helmet:true},
-  {id:'pixel',name:'РџРёРєСЃРµР»СЊ',price:20,shirt:'#7b1fa2',pants:'#4a148c',shoes:'#ff4081',skin:'#e1bee7',hair:'#4a148c',cap:'#7b1fa2',overalls:false,glitch:true},
+  {id:'default',name:'Марио',price:0,shirt:'#e53935',pants:'#1565c0',shoes:'#5d4037',skin:'#ffccaa',hair:'#4e342e',cap:'#e53935',overalls:true},
+  {id:'redtshirt',name:'Красная футболка',price:3,shirt:'#e53935',pants:'#37474f',shoes:'#5d4037',skin:'#ffccaa',hair:'#4e342e',cap:'#37474f',overalls:false},
+  {id:'luigi',name:'Луиджи',price:5,shirt:'#2e7d32',pants:'#1565c0',shoes:'#5d4037',skin:'#ffccaa',hair:'#4e342e',cap:'#2e7d32',overalls:true},
+  {id:'wario',name:'Варио',price:8,shirt:'#fdd835',pants:'#1565c0',shoes:'#5d4037',skin:'#ffccaa',hair:'#4e342e',cap:'#fdd835',overalls:true},
+  {id:'toad',name:'Жаба',price:10,shirt:'#e53935',pants:'#fff',shoes:'#5d4037',skin:'#ffccaa',hair:'#4e342e',cap:'#e53935',overalls:false,mushroom:true},
+  {id:'builder',name:'Строитель',price:15,shirt:'#ff8f00',pants:'#37474f',shoes:'#5d4037',skin:'#ffccaa',hair:'#4e342e',cap:'#ff8f00',overalls:false,helmet:true},
+  {id:'pixel',name:'Пиксель',price:20,shirt:'#7b1fa2',pants:'#4a148c',shoes:'#ff4081',skin:'#e1bee7',hair:'#4a148c',cap:'#7b1fa2',overalls:false,glitch:true},
 ];
 const DINO_ITEMS=[
-  {id:'default',name:'РџСЂРёРЅС†РµСЃСЃР°',price:0},
-  {id:'crown',name:'РљРѕСЂРѕРЅР°',price:5},
-  {id:'bow',name:'Р‘Р°РЅС‚РёРє',price:8},
-  {id:'dress',name:'РџР»Р°С‚СЊРµ',price:12},
-  {id:'star',name:'Р—РІРµР·РґР°',price:15},
+  {id:'default',name:'Принцесса',price:0},
+  {id:'crown',name:'Корона',price:5},
+  {id:'bow',name:'Бантик',price:8},
+  {id:'dress',name:'Платье',price:12},
+  {id:'star',name:'Звезда',price:15},
 ];
 const OBS_TYPES=[
   {id:'pipe_s',w:48,h:40,color:'#2e7d32'},
@@ -62,7 +62,7 @@ function rndRect(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y
 function getOutfit(){return OUTFITS.find(o=>o.id===save.equipped)||OUTFITS[0];}
 function getDinoItem(){return DINO_ITEMS.find(d=>d.id===save.dinoEquipped)||DINO_ITEMS[0];}
 
-// ---- РџР Р•Р Р•РќР”Р•Р  Р¤РћРќРђ (СЂРёСЃСѓРµС‚СЃСЏ 1 СЂР°Р·, РІРјРµСЃС‚Рѕ СЃРѕС‚РµРЅ РѕРїРµСЂР°С†РёР№ РєР°Р¶РґС‹Р№ РєР°РґСЂ) ----
+// ---- ПРЕРЕНДЕР ФОНА (рисуется 1 раз, вместо сотен операций каждый кадр) ----
 const bgTile={};
 function buildBgTiles(){
   const sky=document.createElement('canvas');sky.width=W;sky.height=GROUND;
@@ -641,7 +641,7 @@ function drawDino(dx,dy,dw,dh,frame,item){
   // Heart
   if(Math.sin(frame*0.08)>0.6){
     ctx.fillStyle='#e74c3c';ctx.font='22px monospace';ctx.textAlign='center';
-    ctx.fillText('в™Ґ',dx+dw-28,dy+br-60-Math.sin(frame*0.12)*6);
+    ctx.fillText('♥',dx+dw-28,dy+br-60-Math.sin(frame*0.12)*6);
   }
 }
 
@@ -729,7 +729,7 @@ function drawObstacle(ox,oy,ow,oh,type){
 
 function drawPortal(px,py,pw,ph){
   const gw=Math.sin(gameTime*0.06)*10+10;
-  // Outer glow (РіСЂР°РґРёРµРЅС‚РѕРј, Р±РµР· РґРѕСЂРѕРіРѕРіРѕ shadowBlur)
+  // Outer glow (градиентом, без дорогого shadowBlur)
   const grd=ctx.createRadialGradient(px+pw/2,py+ph/2,0,px+pw/2,py+ph/2,45+gw);
   grd.addColorStop(0,'rgba(155,89,182,0.5)');grd.addColorStop(1,'rgba(155,89,182,0)');
   ctx.fillStyle=grd;
@@ -762,15 +762,15 @@ function drawPortal(px,py,pw,ph){
   ctx.beginPath();ctx.moveTo(px+pw/2+4,py+15);ctx.lineTo(px+pw/2+50,py+25);ctx.lineTo(px+pw/2+4,py+35);ctx.fill();
   // Star on flag
   ctx.fillStyle='#fdd835';ctx.font='16px monospace';ctx.textAlign='center';
-  ctx.fillText('в…',px+pw/2+28,py+30);
+  ctx.fillText('★',px+pw/2+28,py+30);
   // Portal label
   ctx.fillStyle='#fff';ctx.font='bold 9px monospace';ctx.textAlign='center';
-  ctx.fillText('Р¤РРќРРЁ',px+pw/2,py-16);
+  ctx.fillText('ФИНИШ',px+pw/2,py-16);
 }
 
 function drawSkyScreen(){
   ctx.drawImage(bgTile.sky,0,0);
-  // Birds (Р°РЅРёРјРёСЂРѕРІР°РЅРЅС‹Рµ, РґС‘С€РµРІРѕ)
+  // Birds (анимированные, дёшево)
   for(let i=0;i<4;i++){
     const ba=gameTime*0.015+i*1.8;
     const bx=W*0.3+Math.sin(ba)*W*0.4;
@@ -787,40 +787,40 @@ function drawBg(){
   const seg=W*2+200;
   const tile=(t,off,wrap,x,y,w,h)=>ctx.drawImage(t,-mod(off,wrap),y,w,h);
 
-  // РћР±Р»Р°РєР°
+  // Облака
   tile(bgTile.clouds,camX*0.1,seg,0,0,seg,bgTile.clouds.height);
-  // Р“РѕСЂС‹
+  // Горы
   tile(bgTile.mountains,camX*0.05,W*3,0,GROUND-bgTile.mountains.height,W*3,bgTile.mountains.height);
-  // РҐРѕР»РјС‹
+  // Холмы
   tile(bgTile.hills,camX*0.2,seg,0,GROUND-bgTile.hills.height,seg,bgTile.hills.height);
-  // Р”РµСЂРµРІСЊСЏ
+  // Деревья
   tile(bgTile.trees,camX*0.25,W*2+100,0,GROUND-bgTile.trees.height,W*2+100,bgTile.trees.height);
-  // РљСѓСЃС‚С‹
+  // Кусты
   tile(bgTile.bushes,camX*0.18,seg,0,GROUND-bgTile.bushes.height,seg,bgTile.bushes.height);
-  // Р—РµРјР»СЏ
+  // Земля
   ctx.fillStyle='#6d4c2a';
   ctx.fillRect(0,GROUND,W,H-GROUND);
-  // Р“СЂСЏР·СЊ
+  // Грязь
   tile(bgTile.dirt,camX*0.4,W+28,0,GROUND+4,W+28,bgTile.dirt.height);
-  // РўСЂР°РІР° РІРµСЂС…
+  // Трава верх
   ctx.fillStyle='#4a7a2a';
   ctx.fillRect(0,GROUND-3,W,7);
   ctx.fillStyle='#5a9a3a';
   ctx.fillRect(0,GROUND-5,W,4);
-  // РўСЂР°РІРёРЅРєРё
+  // Травинки
   tile(bgTile.grass,camX*0.5,W+24,0,GROUND,W+24,bgTile.grass.height);
-  // РЎР»РѕРё РїРѕС‡РІС‹
+  // Слои почвы
   ctx.fillStyle='#5a3d1a';
   ctx.fillRect(0,GROUND+48,W,6);
   ctx.fillStyle='#4a2d0a';
   ctx.fillRect(0,GROUND+54,W,12);
   ctx.fillStyle='#3a1d00';
   ctx.fillRect(0,GROUND+66,W,H-GROUND-66);
-  // РљР°РјРµС€РєРё
+  // Камешки
   tile(bgTile.pebbles,camX*0.5,W*2,0,GROUND+8,W*2,bgTile.pebbles.height);
-  // Р¦РІРµС‚РѕС‡РєРё
+  // Цветочки
   tile(bgTile.flowers,camX*0.6,W*2,0,GROUND-9,W*2,bgTile.flowers.height);
-  // РљР°РјРЅРё
+  // Камни
   tile(bgTile.rocks,camX*0.4,W+20,0,GROUND+20,W+20,bgTile.rocks.height);
 }
 
@@ -870,12 +870,12 @@ function updGame(){
   if(player.inv>0)player.inv--;
 
   // Story
-  if(storyP===0&&player.x>200){storyP=1;showT('РџРµСЂРµРїСЂС‹РіРЅРё Р·Р°Р±РѕСЂ Р±Р°Р±СѓС€РєРё Р“Р°Р»Рё!',90);}
+  if(storyP===0&&player.x>200){storyP=1;showT('Перепрыгни забор бабушки Гали!',90);}
   if(storyP===1){
     if(player.x+player.w>260&&player.x<370){
       if(player.y+player.h<=GROUND-48){
         storyP=2;grandma.active=true;grandma.x=-220;grandma.y=GROUND-68;
-        showT('Р‘Р°Р±СѓС€РєР° Р“Р°Р»СЏ Р·Р°РјРµС‚РёР»Р°! Р‘Р•Р–РРњ! рџЏѓ',80);
+        showT('Бабушка Галя заметила! БЕЖИМ! 🏃',80);
         spawnP(280,GROUND-50,'#ffd700',12);
       }
     }
@@ -938,7 +938,7 @@ function updGame(){
       if(player.vy>0&&player.y+player.h-player.vy<=o.y+10){
         player.y=o.y-player.h;player.vy=0;player.onGround=true;player.jumps=0;
         if(o.type==='question'){
-          showT('РџРёРѕРЅ! +2 рџЊё',30);
+          showT('Пион! +2 🌸',30);
           collected+=2;o.hit=true;
           spawnP(o.x+o.w/2,o.y,'#ffd700',10);
         }
@@ -955,7 +955,7 @@ function updGame(){
     if(!p.col&&Math.abs(player.x+player.w/2-(p.x+p.w/2))<26&&Math.abs(player.y+player.h/2-(p.y+p.h/2))<30){
       p.col=true;collected++;
       spawnP(p.x+p.w/2,p.y+p.h/2,'#ffd700',10);
-      showT('+1 РїРёРѕРЅ',25);
+      showT('+1 пион',25);
     }
     if(!p.col&&Math.random()<0.005)spawnP(p.x+rand(0,16),p.y+rand(0,16),['#ffd700','#ff69b4','#fff'][Math.floor(rand(0,3))],1);
   }
@@ -964,13 +964,13 @@ function updGame(){
   if(player.x+player.w>portal.x&&!win){
     win=true;dino.visible=true;dino.x=portal.x-90;dino.y=GROUND-100;
     spawnP(portal.x+portal.w/2,portal.y+portal.h/2,'#8e44ad',30);
-    showT('РџРѕСЂС‚Р°Р» РѕС‚РєСЂС‹С‚! РђСЂСѓР¶Р°РЅ Р¶РґС‘С‚! рџ¦•',120);
+    showT('Портал открыт! Аружан ждёт! 🦕',120);
   }
 
   const tc=player.x-W*0.35;
   if(tc>0)camX+=(tc-camX)*0.12;
 
-  // Ambient particles (СЂРµР¶Рµ Рё РјРµРЅСЊС€Рµ, Р»РёРјРёС‚С‹ РЅРёР¶Рµ)
+  // Ambient particles (реже и меньше, лимиты ниже)
   if(gameTime%5===0)particles.push({x:camX+rand(0,W),y:rand(0,GROUND-20),vx:0.1,vy:-0.05,life:120+rand(0,60),max:180,color:'rgba(255,255,255,0.15)',size:1.5+rand(0,1)});
   if(particles.length>60)particles.splice(0,particles.length-60);
 
@@ -1012,7 +1012,7 @@ function spawnP(x,y,c,cnt){
 }
 function showT(m,d){textMsgs.push({msg:m,life:d,max:d});}
 
-// ---- RENDER (Р±РµР· РґРІРѕР№РЅРѕРіРѕ requestAnimationFrame вЂ” СЌС‚Рѕ Рё Р±С‹Р»Рѕ РїСЂРёС‡РёРЅРѕР№ Р·Р°РІРёСЃР°РЅРёСЏ) ----
+// ---- RENDER (без двойного requestAnimationFrame — это и было причиной зависания) ----
 function draw(){
   ctx.clearRect(0,0,W,H);
   if(state==='menu')drawMenu();
@@ -1060,9 +1060,9 @@ function drawGame(){
     ctx.fillStyle='#f5deb3';ctx.fillRect(fx+fw/2-50,GROUND-fh-20,100,18);
     ctx.strokeStyle='#5d4037';ctx.lineWidth=1.5;ctx.strokeRect(fx+fw/2-50,GROUND-fh-20,100,18);
     ctx.fillStyle='#c0392b';ctx.font='bold 9px monospace';ctx.textAlign='center';
-    ctx.fillText('Р¤Р•Р РњРђ Р‘РђР‘РЈРЁРљР Р“РђР›Р',fx+fw/2,GROUND-fh-8);
+    ctx.fillText('ФЕРМА БАБУШКИ ГАЛИ',fx+fw/2,GROUND-fh-8);
     ctx.fillStyle='#c0392b';ctx.font='bold 8px monospace';
-    ctx.fillText('РќР• Р’Р›Р•Р—РђРўР¬!',fx+fw/2,GROUND-3);
+    ctx.fillText('НЕ ВЛЕЗАТЬ!',fx+fw/2,GROUND-3);
   }
 
   // Butterflies
@@ -1110,7 +1110,7 @@ function drawGame(){
 
   const o=getOutfit();
 
-  // Player trail (Р±РµР· shadowBlur)
+  // Player trail (без shadowBlur)
   for(const t of trail){
     ctx.globalAlpha=t.life/18*0.25;
     drawMario(t.x,t.y,player.w,player.h,o,t.facing,t.frame,0);
@@ -1130,7 +1130,7 @@ function drawGame(){
   ctx.globalAlpha=1;
   ctx.restore();
 
-  // HUD - Mario style (С‚РµРЅСЊ С‚РµРєСЃС‚Р° РґРІРѕР№РЅРѕР№ РѕС‚СЂРёСЃРѕРІРєРѕР№ РІРјРµСЃС‚Рѕ shadowBlur)
+  // HUD - Mario style (тень текста двойной отрисовкой вместо shadowBlur)
   ctx.fillStyle='rgba(0,0,0,0.6)';
   rndRect(ctx,8,8,235,64,8);ctx.fill();
   ctx.strokeStyle='rgba(255,255,255,0.1)';ctx.lineWidth=1.5;
@@ -1138,15 +1138,15 @@ function drawGame(){
 
   ctx.textAlign='left';
   ctx.fillStyle='rgba(0,0,0,0.8)';ctx.font='bold 26px monospace';
-  ctx.fillText('рџЊё Г— '+collected,17,41);
+  ctx.fillText('🌸 × '+collected,17,41);
   ctx.fillStyle='#ffd700';ctx.font='bold 26px monospace';
-  ctx.fillText('рџЊё Г— '+collected,16,40);
+  ctx.fillText('🌸 × '+collected,16,40);
   ctx.fillStyle='rgba(0,0,0,0.8)';ctx.font='bold 13px monospace';
-  ctx.fillText('Р”РРЎРў: '+Math.floor(dist/10)+'Рј',17,61);
+  ctx.fillText('ДИСТ: '+Math.floor(dist/10)+'м',17,61);
   ctx.fillStyle='#fff';ctx.font='bold 13px monospace';
-  ctx.fillText('Р”РРЎРў: '+Math.floor(dist/10)+'Рј',16,60);
+  ctx.fillText('ДИСТ: '+Math.floor(dist/10)+'м',16,60);
   ctx.fillStyle='rgba(255,255,255,0.4)';ctx.font='9px monospace';
-  ctx.fillText('РЎРљРћР РћРЎРўР¬: '+Math.floor(Math.abs(player.vx)*1.5)+'РєРј/С‡',126,60);
+  ctx.fillText('СКОРОСТЬ: '+Math.floor(Math.abs(player.vx)*1.5)+'км/ч',126,60);
 
   // Grandma warning
   if(grandma.active&&player.x-grandma.x<350){
@@ -1154,7 +1154,7 @@ function drawGame(){
     const pls=Math.sin(gameTime*0.2)*0.2+0.8;
     ctx.fillStyle=`rgba(255,0,0,${urg*pls*0.5})`;
     ctx.font='bold 14px monospace';ctx.textAlign='center';
-    ctx.fillText('вљ  Р‘РђР‘РЈРЁРљРђ Р“РђР›РЇ Р РЇР”РћРњ! вљ ',W/2,26);
+    ctx.fillText('⚠ БАБУШКА ГАЛЯ РЯДОМ! ⚠',W/2,26);
     ctx.fillStyle='rgba(0,0,0,0.4)';
     rndRect(ctx,W/2-60,32,120,8,4);ctx.fill();
     ctx.fillStyle='#e74c3c';
@@ -1192,14 +1192,14 @@ function drawGame(){
     ctx.fillText('GAME OVER',W/2,H/2-45);
     ctx.fillStyle=`rgba(255,255,255,${goA*0.85})`;
     ctx.font='16px monospace';
-    ctx.fillText('Р‘Р°Р±СѓС€РєР° Р“Р°Р»СЏ РїРѕР№РјР°Р»Р° С‚РµР±СЏ! рџ’Ђ',W/2,H/2+5);
+    ctx.fillText('Бабушка Галя поймала тебя! 💀',W/2,H/2+5);
     ctx.fillStyle='#ffd700';ctx.font='14px monospace';
-    ctx.fillText('РЎРѕР±СЂР°РЅРѕ РїРёРѕРЅРѕРІ: '+collected+' рџЊё',W/2,H/2+40);
+    ctx.fillText('Собрано пионов: '+collected+' 🌸',W/2,H/2+40);
 
     if(endT>60){
       ctx.fillStyle='#e53935';rndRect(ctx,W/2-85,H/2+65,170,46,10);ctx.fill();
       ctx.fillStyle='#fff';ctx.font='bold 14px monospace';
-      ctx.fillText('в†» Р—РђРќРћР’Рћ',W/2,H/2+95);
+      ctx.fillText('↻ ЗАНОВО',W/2,H/2+95);
     }
   }
 
@@ -1208,13 +1208,13 @@ function drawGame(){
     ctx.fillStyle=`rgba(0,0,0,${fadeA*0.4})`;ctx.fillRect(0,0,W,H);
     ctx.fillStyle=`rgba(255,255,255,${fadeA})`;
     ctx.font='bold 28px monospace';ctx.textAlign='center';
-    ctx.fillText('рџЋ‰ РўР« РќРђРЁРЃР› РђР РЈР–РђРќ! рџЋ‰',W/2,H/2-40);
+    ctx.fillText('🎉 ТЫ НАШЁЛ АРУЖАН! 🎉',W/2,H/2-40);
     ctx.font='14px monospace';
     ctx.fillStyle=`rgba(255,255,255,${fadeA*0.7})`;
-    ctx.fillText('РђР№С‚РёС€РЅРёРє РґР°СЂРёС‚ Р±СѓРєРµС‚ РїСЂРёРЅС†РµСЃСЃРµ-РґРёРЅРѕР·Р°РІСЂРёС…Рµ! рџ’ђ',W/2,H/2);
+    ctx.fillText('Айтишник дарит букет принцессе-динозаврихе! 💐',W/2,H/2);
     for(let i=0;i<3;i++){
       ctx.fillStyle='#e74c3c';ctx.font='24px monospace';
-      ctx.fillText('в™Ґ',W/2-60+i*60+Math.sin(gameTime*0.06+i*2)*10,H/2+30+Math.sin(gameTime*0.08+i*1.5)*6);
+      ctx.fillText('♥',W/2-60+i*60+Math.sin(gameTime*0.06+i*2)*10,H/2+30+Math.sin(gameTime*0.08+i*1.5)*6);
     }
   }
 }
@@ -1252,19 +1252,19 @@ function drawMenu(){
   // Title - animated Mario style
   const tShift=Math.sin(gameTime*0.04)*4;
   ctx.fillStyle='rgba(0,0,0,0.5)';ctx.font='bold 38px monospace';ctx.textAlign='center';
-  ctx.fillText('РџР РРљР›Р®Р§Р•РќРР• РђР™РўРРЁРќРРљРђ',W/2+2,60+tShift);
+  ctx.fillText('ПРИКЛЮЧЕНИЕ АЙТИШНИКА',W/2+2,60+tShift);
   ctx.fillStyle='#e53935';ctx.font='bold 38px monospace';
-  ctx.fillText('РџР РРљР›Р®Р§Р•РќРР• РђР™РўРРЁРќРРљРђ',W/2,58+tShift);
+  ctx.fillText('ПРИКЛЮЧЕНИЕ АЙТИШНИКА',W/2,58+tShift);
   ctx.fillStyle='rgba(0,0,0,0.5)';ctx.font='bold 28px monospace';
-  ctx.fillText('Р’ РџРћРРЎРљРђРҐ РђР РЈР–РђРќ',W/2+1,94+tShift);
+  ctx.fillText('В ПОИСКАХ АРУЖАН',W/2+1,94+tShift);
   ctx.fillStyle='#fff';ctx.font='bold 28px monospace';
-  ctx.fillText('Р’ РџРћРРЎРљРђРҐ РђР РЈР–РђРќ',W/2,92+tShift);
+  ctx.fillText('В ПОИСКАХ АРУЖАН',W/2,92+tShift);
   ctx.fillStyle='#fdd835';ctx.font='14px monospace';
-  ctx.fillText('в… РЎСѓРїРµСЂ-С„РµСЂРјР° Р±Р°Р±СѓС€РєРё Р“Р°Р»Рё в…',W/2,118+tShift);
+  ctx.fillText('★ Супер-ферма бабушки Гали ★',W/2,118+tShift);
 
   // Costumes
   ctx.fillStyle='#fff';ctx.font='bold 13px monospace';
-  ctx.fillText('Р’Р«Р‘Р•Р Р РљРћРЎРўР®Рњ:',W/2,152);
+  ctx.fillText('ВЫБЕРИ КОСТЮМ:',W/2,152);
 
   const sx=W/2-280,cy=158,cw=90,ch=130,gap=14;
   for(let i=0;i<OUTFITS.length;i++){
@@ -1294,9 +1294,9 @@ function drawMenu(){
     ctx.fillStyle=sel?'#e94560':'#ddd';
     ctx.font='bold 9px monospace';ctx.textAlign='center';
     ctx.fillText(OUTFITS[i].name,cx+cw/2,cy+ch-24);
-    if(eq){ctx.fillStyle='#76ff03';ctx.font='8px monospace';ctx.fillText('вњ“ РќРђР”Р•Рў',cx+cw/2,cy+ch-8);}
-    else if(own){ctx.fillStyle='#aaa';ctx.font='8px monospace';ctx.fillText('Р’ РіР°СЂРґРµСЂРѕР±Рµ',cx+cw/2,cy+ch-8);}
-    else{ctx.fillStyle='#ffd700';ctx.font='8px monospace';ctx.fillText('рџЊё'+OUTFITS[i].price,cx+cw/2,cy+ch-8);}
+    if(eq){ctx.fillStyle='#76ff03';ctx.font='8px monospace';ctx.fillText('✓ НАДЕТ',cx+cw/2,cy+ch-8);}
+    else if(own){ctx.fillStyle='#aaa';ctx.font='8px monospace';ctx.fillText('В гардеробе',cx+cw/2,cy+ch-8);}
+    else{ctx.fillStyle='#ffd700';ctx.font='8px monospace';ctx.fillText('🌸'+OUTFITS[i].price,cx+cw/2,cy+ch-8);}
   }
 
   // Start button (Mario style)
@@ -1306,19 +1306,19 @@ function drawMenu(){
   ctx.fillStyle='#e53935';rndRect(ctx,bx,by+pls,bw,bh,10);ctx.fill();
   ctx.fillStyle='#c62828';rndRect(ctx,bx+3,by+pls+3,bw-6,bh-6,8);ctx.fill();
   ctx.fillStyle='#fff';ctx.font='bold 20px monospace';ctx.textAlign='center';
-  ctx.fillText('в–¶  РќРђР§РђРўР¬  в–¶',W/2,by+pls+34);
+  ctx.fillText('▶  НАЧАТЬ  ▶',W/2,by+pls+34);
 
   // Controls
   ctx.fillStyle='rgba(255,255,255,0.4)';ctx.font='10px monospace';
-  ctx.fillText('в†ђ в†’ / A D : Р”Р’РР–Р•РќРР•  |  в†‘ / W / РџР РћР‘Р•Р› : РџР Р«Р–РћРљ  |  в†“ / S : РџРђР”Р•РќРР•',W/2,395);
+  ctx.fillText('← → / A D : ДВИЖЕНИЕ  |  ↑ / W / ПРОБЕЛ : ПРЫЖОК  |  ↓ / S : ПАДЕНИЕ',W/2,395);
 
   // Shop / Stats
   ctx.fillStyle='rgba(0,0,0,0.35)';rndRect(ctx,15,H-50,160,32,6);ctx.fill();
   ctx.fillStyle='#ffd700';ctx.font='13px monospace';ctx.textAlign='left';
-  ctx.fillText('рџЏЄ РњРђР“РђР—РРќ  рџЊё'+save.peonies,24,H-28);
+  ctx.fillText('🏪 МАГАЗИН  🌸'+save.peonies,24,H-28);
 
   ctx.fillStyle='rgba(255,255,255,0.1)';ctx.font='9px monospace';ctx.textAlign='right';
-  ctx.fillText('v2.1 вЂ” РѕРїС‚РёРјРёР·РёСЂРѕРІР°РЅРЅР°СЏ',W-12,H-10);
+  ctx.fillText('v2.1 — оптимизированная',W-12,H-10);
 }
 
 // ---- SHOP ----
@@ -1329,23 +1329,23 @@ function drawShop(){
   ctx.fillStyle='rgba(0,0,0,0.3)';ctx.fillRect(0,0,W,H);
 
   ctx.fillStyle='#ffd700';ctx.font='bold 26px monospace';ctx.textAlign='center';
-  ctx.fillText('рџЏЄ РњРђР“РђР—РРќ',W/2,45);
+  ctx.fillText('🏪 МАГАЗИН',W/2,45);
   ctx.fillStyle='#fff';ctx.font='16px monospace';
-  ctx.fillText('РџРРћРќРћР’: рџЊё '+save.peonies,W/2,78);
+  ctx.fillText('ПИОНОВ: 🌸 '+save.peonies,W/2,78);
 
   ctx.fillStyle=shopTab==='outfits'?'#e53935':'rgba(255,255,255,0.15)';
   rndRect(ctx,100,95,170,32,6);ctx.fill();
   ctx.fillStyle='#fff';ctx.font='bold 12px monospace';ctx.textAlign='center';
-  ctx.fillText('РљРћРЎРўР®РњР«',185,117);
+  ctx.fillText('КОСТЮМЫ',185,117);
 
   ctx.fillStyle=shopTab==='dino'?'#e53935':'rgba(255,255,255,0.15)';
   rndRect(ctx,290,95,210,32,6);ctx.fill();
   ctx.fillStyle='#fff';ctx.font='bold 12px monospace';
-  ctx.fillText('РђР РЈР–РђРќ',395,117);
+  ctx.fillText('АРУЖАН',395,117);
 
   ctx.fillStyle='rgba(255,255,255,0.1)';rndRect(ctx,20,95,60,30,6);ctx.fill();
   ctx.fillStyle='#ddd';ctx.font='12px monospace';ctx.textAlign='center';
-  ctx.fillText('в†ђ РќРђР—РђР”',50,116);
+  ctx.fillText('← НАЗАД',50,116);
 
   const items=shopTab==='outfits'?OUTFITS:DINO_ITEMS;
   const ef=shopTab==='outfits'?'equipped':'dinoEquipped';
@@ -1362,18 +1362,18 @@ function drawShop(){
     ctx.fillStyle='#fff';ctx.font='bold 14px monospace';ctx.textAlign='left';
     ctx.fillText(items[i].name,ix+15,iy+22);
 
-    if(eq){ctx.fillStyle='#76ff03';ctx.font='11px monospace';ctx.fillText('вњ“ РќРђР”Р•РўРћ',ix+15,iy+60);}
+    if(eq){ctx.fillStyle='#76ff03';ctx.font='11px monospace';ctx.fillText('✓ НАДЕТО',ix+15,iy+60);}
     else if(own){ctx.fillStyle='#aaa';ctx.font='11px monospace';
-      ctx.fillText('Р’ РќРђР›РР§РР',ix+15,iy+60);
+      ctx.fillText('В НАЛИЧИИ',ix+15,iy+60);
       ctx.fillStyle='rgba(255,255,255,0.1)';rndRect(ctx,ix+135,iy+48,80,24,6);ctx.fill();
-      ctx.fillStyle='#fff';ctx.font='10px monospace';ctx.textAlign='center';ctx.fillText('РќРђР”Р•РўР¬',ix+175,iy+65);
+      ctx.fillStyle='#fff';ctx.font='10px monospace';ctx.textAlign='center';ctx.fillText('НАДЕТЬ',ix+175,iy+65);
     }else{
       const aff=save.peonies>=items[i].price;
       ctx.fillStyle=aff?'#ffd700':'#666';ctx.font='11px monospace';
-      ctx.fillText('рџЊё '+items[i].price,ix+15,iy+60);
+      ctx.fillText('🌸 '+items[i].price,ix+15,iy+60);
       ctx.fillStyle=aff?'rgba(46,204,113,0.8)':'rgba(100,100,100,0.3)';
       rndRect(ctx,ix+135,iy+48,80,24,6);ctx.fill();
-      ctx.fillStyle=aff?'#fff':'#888';ctx.font='10px monospace';ctx.textAlign='center';ctx.fillText('РљРЈРџРРўР¬',ix+175,iy+65);
+      ctx.fillStyle=aff?'#fff':'#888';ctx.font='10px monospace';ctx.textAlign='center';ctx.fillText('КУПИТЬ',ix+175,iy+65);
     }
   }
   if(shopMsgT>0){
@@ -1409,7 +1409,7 @@ function drawEnd(){
   // Heart between them
   const hb=Math.sin(gameTime*0.06)*8;
   ctx.fillStyle='#e74c3c';ctx.font='36px monospace';ctx.textAlign='center';
-  ctx.fillText('в™Ґ',W/2-5,280+hb);
+  ctx.fillText('♥',W/2-5,280+hb);
 
   // Player
   const eo=getOutfit();
@@ -1417,26 +1417,26 @@ function drawEnd(){
 
   // Text
   ctx.fillStyle='rgba(0,0,0,0.5)';ctx.font='bold 34px monospace';ctx.textAlign='center';
-  ctx.fillText('РЎР§РђРЎРўР›РР’Р«Р™ РљРћРќР•Р¦!',W/2+2,72);
+  ctx.fillText('СЧАСТЛИВЫЙ КОНЕЦ!',W/2+2,72);
   ctx.fillStyle='#fff';ctx.font='bold 34px monospace';
-  ctx.fillText('РЎР§РђРЎРўР›РР’Р«Р™ РљРћРќР•Р¦!',W/2,70);
+  ctx.fillText('СЧАСТЛИВЫЙ КОНЕЦ!',W/2,70);
   ctx.fillStyle='#ff69b4';ctx.font='17px monospace';
-  ctx.fillText('РђР№С‚РёС€РЅРёРє РїРѕРґР°СЂРёР» РђСЂСѓР¶Р°РЅ Р±СѓРєРµС‚ РїРёРѕРЅРѕРІ! рџ’ђ',W/2,108);
+  ctx.fillText('Айтишник подарил Аружан букет пионов! 💐',W/2,108);
 
   ctx.fillStyle='#ffd700';ctx.font='bold 20px monospace';
-  ctx.fillText('РЎРћР‘Р РђРќРћ РџРРћРќРћР’: '+collected+' рџЊё',W/2,370);
+  ctx.fillText('СОБРАНО ПИОНОВ: '+collected+' 🌸',W/2,370);
   const earned=Math.floor(collected*1.5);
   ctx.fillStyle='#76ff03';ctx.font='15px monospace';
-  ctx.fillText('+'+earned+' РїРёРѕРЅРѕРІ Р·Р° РїСЂРѕС…РѕР¶РґРµРЅРёРµ!',W/2,395);
+  ctx.fillText('+'+earned+' пионов за прохождение!',W/2,395);
 
   // Buttons
   ctx.fillStyle='#c62828';rndRect(ctx,W/2-148,432,140,48,10);ctx.fill();
   ctx.fillStyle='#e53935';rndRect(ctx,W/2-150,430,140,48,10);ctx.fill();
   ctx.fillStyle='#fff';ctx.font='bold 15px monospace';ctx.textAlign='center';
-  ctx.fillText('рџЏ  Р—РђРљРћРќР§РРўР¬',W/2-80,460);
+  ctx.fillText('🏠 ЗАКОНЧИТЬ',W/2-80,460);
   ctx.fillStyle='rgba(255,255,255,0.15)';rndRect(ctx,W/2+10,430,140,48,10);ctx.fill();
   ctx.fillStyle='#ffd700';ctx.font='bold 15px monospace';
-  ctx.fillText('рџЏЄ РњРђР“РђР—РРќ',W/2+80,460);
+  ctx.fillText('🏪 МАГАЗИН',W/2+80,460);
 }
 
 // ---- INPUT ----
@@ -1479,14 +1479,14 @@ function click(mx,my){
       const btnX=ix+135,btnY=iy+48,btnW=80,btnH=24;
 
       if(mx>=btnX&&mx<=btnX+btnW&&my>=btnY&&my<=btnY+btnH){
-        if(own&&!eq){save[ef]=items[i].id;ws();shopMsg=items[i].name+' РЅР°РґРµС‚!';shopMsgT=50;return;}
+        if(own&&!eq){save[ef]=items[i].id;ws();shopMsg=items[i].name+' надет!';shopMsgT=50;return;}
         if(!own){
           if(save.peonies>=items[i].price){
             save.peonies-=items[i].price;
             const arr=shopTab==='outfits'?save.outfits:save.dinoItems;
             arr.push(items[i].id);save[ef]=items[i].id;ws();
-            shopMsg='РљСѓРїР»РµРЅРѕ: '+items[i].name+'!';shopMsgT=50;
-          }else{shopMsg='РќРµ С…РІР°С‚Р°РµС‚ РїРёРѕРЅРѕРІ!';shopMsgT=50;}
+            shopMsg='Куплено: '+items[i].name+'!';shopMsgT=50;
+          }else{shopMsg='Не хватает пионов!';shopMsgT=50;}
           return;
         }
       }

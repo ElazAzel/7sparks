@@ -168,7 +168,7 @@ export const films: FestivalFilm[] = [
     isSecret: false,
     externalPageUrl: null,
     youtubeUrl: "https://youtu.be/lncFX66Tk4o",
-    gameUrls: ["https://festival-premiere-page.lovable.app/"],
+    gameUrls: ["https://festival-premiere-page.lovable.app/", "/games/aitishnik/"],
     shortDescription: "Команда «История» представляет премьеру, которую хочется пересказывать.",
     poster: null,
     gallery: [],
